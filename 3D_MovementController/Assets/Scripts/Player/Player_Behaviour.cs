@@ -1,35 +1,31 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Movement_Action))]
 public class Player_Behaviour : MonoBehaviour
 {
-    private PlayerControls controls;
-    private Movement_Action movementInput;
+    private Movement_Action movement;
 
     private void Awake()
     {
-        controls = new PlayerControls();
-        movementInput = GetComponent<Movement_Action>();
+        movement = GetComponent<Movement_Action>();
     }
 
-    private void OnEnable()
+    public void OnMove(InputAction.CallbackContext ctx)
     {
-        controls.Player.Enable();
+        Vector2 input = ctx.ReadValue<Vector2>();
+        movement.UpdateHorizontalMovement(input);
     }
 
-    private void OnDisable()
+    public void OnJump(InputAction.CallbackContext ctx)
     {
-        controls.Player.Disable();
+        if (ctx.started)
+            movement.RequestJump();
     }
 
-    private void Update()
+    public void OnSprint(InputAction.CallbackContext ctx)
     {
-        Movement();
-    }
-
-    private void Movement()
-    {
-        Vector2 move = controls.Player.Move.ReadValue<Vector2>();
-        movementInput.MoveHorizontally(move);
+        if (ctx.started) movement.StartSprint();
+        if (ctx.canceled) movement.StopSprint();
     }
 }

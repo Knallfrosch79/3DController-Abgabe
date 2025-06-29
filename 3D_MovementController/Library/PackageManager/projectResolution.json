@@ -58,6 +58,16 @@
       "source": "builtin",
       "testable": false
     },
+    "com.unity.probuilder@6.0.5": {
+      "name": "com.unity.probuilder",
+      "displayName": "ProBuilder",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.probuilder@b55f3ad2afd2",
+      "fingerprint": "b55f3ad2afd2f5505e0e532971da5bb5a17f128f",
+      "editorCompatibility": "6000.0.0a1",
+      "version": "6.0.5",
+      "source": "registry",
+      "testable": false
+    },
     "com.unity.timeline@1.8.8": {
       "name": "com.unity.timeline",
       "displayName": "Timeline",
@@ -360,6 +370,26 @@
       "source": "builtin",
       "testable": false
     },
+    "com.unity.shadergraph@17.0.4": {
+      "name": "com.unity.shadergraph",
+      "displayName": "Shader Graph",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.shadergraph@5c8f96f445ce",
+      "fingerprint": "5c8f96f445ce3b641a34169a1f583821ec0021f0",
+      "editorCompatibility": "6000.0.0a1",
+      "version": "17.0.4",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.settings-manager@2.1.0": {
+      "name": "com.unity.settings-manager",
+      "displayName": "Settings Manager",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.settings-manager@41738c275190",
+      "fingerprint": "41738c27519039c335849eb78949382f4d7a3544",
+      "editorCompatibility": "2022.3.0a1",
+      "version": "2.1.0",
+      "source": "registry",
+      "testable": false
+    },
     "com.unity.ide.visualstudio@2.0.23": {
       "name": "com.unity.ide.visualstudio",
       "displayName": "Visual Studio Editor",
@@ -430,13 +460,23 @@
       "source": "registry",
       "testable": false
     },
-    "com.unity.settings-manager@2.1.0": {
-      "name": "com.unity.settings-manager",
-      "displayName": "Settings Manager",
-      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.settings-manager@41738c275190",
-      "fingerprint": "41738c27519039c335849eb78949382f4d7a3544",
-      "editorCompatibility": "2022.3.0a1",
-      "version": "2.1.0",
+    "com.unity.render-pipelines.core@17.0.4": {
+      "name": "com.unity.render-pipelines.core",
+      "displayName": "Core RP Library",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.render-pipelines.core@b1fa9fba9fd6",
+      "fingerprint": "b1fa9fba9fd6ee318b59d862b2210cde3e167493",
+      "editorCompatibility": "6000.0.0a1",
+      "version": "17.0.4",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.searcher@4.9.3": {
+      "name": "com.unity.searcher",
+      "displayName": "Searcher",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.searcher@1e17ce91558d",
+      "fingerprint": "1e17ce91558d1d9127554adc03d275f39a7466a2",
+      "editorCompatibility": "2019.1.0a1",
+      "version": "4.9.3",
       "source": "registry",
       "testable": false
     },
@@ -457,6 +497,56 @@
       "fingerprint": "8017b507cc74bf0a1dd14b18aa860569f807314d",
       "editorCompatibility": "2021.3.0a1",
       "version": "1.3.2",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.burst@1.8.21": {
+      "name": "com.unity.burst",
+      "displayName": "Burst",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.burst@59eb6f11d242",
+      "fingerprint": "59eb6f11d2422f95682320d9daa3e79fdb076744",
+      "editorCompatibility": "2020.3.0a1",
+      "version": "1.8.21",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.collections@2.5.1": {
+      "name": "com.unity.collections",
+      "displayName": "Collections",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.collections@56bff8827a7e",
+      "fingerprint": "56bff8827a7ef6d44fcee4f36e558a74da89c1a0",
+      "editorCompatibility": "2022.3.11f1",
+      "version": "2.5.1",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.rendering.light-transport@1.0.1": {
+      "name": "com.unity.rendering.light-transport",
+      "displayName": "Unity Light Transport Library",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.rendering.light-transport@307bc27a498f",
+      "fingerprint": "307bc27a498fc9cd409bbd426c85d8dc7f140bc1",
+      "editorCompatibility": "2023.3.0b1",
+      "version": "1.0.1",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.nuget.mono-cecil@1.11.4": {
+      "name": "com.unity.nuget.mono-cecil",
+      "displayName": "Mono Cecil",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.nuget.mono-cecil@d6f9955a5d5f",
+      "fingerprint": "d6f9955a5d5f84d45442ff1ad0fb694cc6e2fd62",
+      "editorCompatibility": "2018.4.0a1",
+      "version": "1.11.4",
+      "source": "registry",
+      "testable": false
+    },
+    "com.unity.test-framework.performance@3.1.0": {
+      "name": "com.unity.test-framework.performance",
+      "displayName": "Performance testing API",
+      "resolvedPath": "D:\\SAE\\GameDev.Basics\\3DController-Abgabe\\3D_MovementController\\Library\\PackageCache\\com.unity.test-framework.performance@92d1d09a72ed",
+      "fingerprint": "92d1d09a72ed696fa23fd76c675b29d211664b50",
+      "editorCompatibility": "2020.3.0a1",
+      "version": "3.1.0",
       "source": "registry",
       "testable": false
     }
