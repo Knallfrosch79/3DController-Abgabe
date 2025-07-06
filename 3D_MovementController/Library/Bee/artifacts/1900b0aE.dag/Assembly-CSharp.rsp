@@ -428,7 +428,13 @@
 -analyzer:"D:/Unity/6000.0.47f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"D:/Unity/6000.0.47f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/PlayerControls.cs"
+"Assets/Scripts/Interaction/Interactable.cs"
+"Assets/Scripts/Interaction/RacastHitProvider.cs"
+"Assets/Scripts/Interaction/RaycastTargetProvider.cs"
+"Assets/Scripts/Interaction/SwitchInteractable.cs"
 "Assets/Scripts/Movement/Movement_Action.cs"
+"Assets/Scripts/Movement/TargetProvider.cs"
+"Assets/Scripts/Player/CameraOrientation.cs"
 "Assets/Scripts/Player/Player_Behaviour.cs"
 "Assets/Scripts/Player/ThirdPersonCamera.cs"
 -langversion:9.0

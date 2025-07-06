@@ -1,31 +1,52 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DefaultNamespace.InteractableSystem;
+using DefaultNamespace.TargetSystem;
 
-[RequireComponent(typeof(Movement_Action))]
-public class Player_Behaviour : MonoBehaviour
+namespace DefaultNamespace.PlayerSystem
 {
-    private Movement_Action movement;
 
-    private void Awake()
+    [RequireComponent(typeof(Movement_Action))]
+    public class Player_Behaviour : MonoBehaviour
     {
-        movement = GetComponent<Movement_Action>();
-    }
+        private Movement_Action movement;
+        private TargetProvider targetProvider; // Add a reference to TargetProvider
 
-    public void OnMove(InputAction.CallbackContext ctx)
-    {
-        Vector2 input = ctx.ReadValue<Vector2>();
-        movement.UpdateHorizontalMovement(input);
-    }
+        private void Awake()
+        {
+            movement = GetComponent<Movement_Action>();
+            targetProvider = GetComponent<TargetProvider>(); // Initialize TargetProvider
+        }
 
-    public void OnJump(InputAction.CallbackContext ctx)
-    {
-        if (ctx.started)
-            movement.RequestJump();
-    }
+        private void OnMove(InputAction.CallbackContext moveInputAction)
+        {
+            Vector2 input = moveInputAction.ReadValue<Vector2>();
+            movement.UpdateHorizontalMovement(input);
+        }
 
-    public void OnSprint(InputAction.CallbackContext ctx)
-    {
-        if (ctx.started) movement.StartSprint();
-        if (ctx.canceled) movement.StopSprint();
+        private void OnJump(InputAction.CallbackContext ctx)
+        {
+            if (ctx.started)
+                movement.RequestJump();
+        }
+
+        private void OnSprint(InputAction.CallbackContext ctx)
+        {
+            if (ctx.started) movement.StartSprint();
+            if (ctx.canceled) movement.StopSprint();
+        }
+
+        private void OnInteract(InputAction.CallbackContext ctx)
+        {
+            if (ctx.started)
+            {
+                var interactable = targetProvider.GetTarget<Interactable>(); // Use the instance of TargetProvider
+                if (interactable == null)
+                {
+                    return;
+                }
+                interactable.Interact();
+            }
+        }
     }
 }

@@ -1,98 +1,124 @@
 using System;
 using UnityEngine;
+using DefaultNamespace.TargetSystem;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Movement_Action : MonoBehaviour
+namespace DefaultNamespace.PlayerSystem
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float movementSpeed = 3f;
-    [SerializeField] private float maxSpeed = 10f;
 
-    [Header("Jump Settings")]
-    [SerializeField] private float jumpPower = 5f;
-    [SerializeField] private float fallSpeedModifier = 1.5f;  // >1 = schneller fallen
-    [SerializeField] private float jumpSpeedModifier = 0.5f;  // <1 = kürzerer Sprung
-    [SerializeField] private float groundCheckDist = 1.1f;
-    [SerializeField] private float sprintMultiplier = 2f; // Multiplier for sprint speed
-    [SerializeField] private LayerMask groundLayer;
-
-    [Header("References")]
-    [Tooltip("Die Kamera, relativ zu der sich bewegt wird.")]
-    [SerializeField] private Transform cameraTransform;
-
-    private Rigidbody rb;
-    private Vector2 moveInput;            // X = horizontal, Y = vor/zur�ck
-    private bool jumpRequested;
-
-    private void Awake() => rb = GetComponent<Rigidbody>();
-
-    /*  ---- Physik - Loop ----
-        Alles, was rb.velocity manipuliert, MUSS in FixedUpdate passieren  */
-    private void FixedUpdate()
+    [RequireComponent(typeof(Rigidbody))]
+    public class Movement_Action : MonoBehaviour
     {
-        HandleHorizontal();
-        HandleJump();
-        HandleGravityModifiers();
-    }
+        [Header("Movement Settings")]
+        [SerializeField] private float baseSpeed = 3f;
+        [SerializeField] private float maxSpeed = 10f;
+        [SerializeField] private float sprintMultiplier = 2f;
 
-    // ---------- API für Player_Behaviour ----------
-    public void UpdateHorizontalMovement(Vector2 dir) => moveInput = dir;
-    public void RequestJump() => jumpRequested = true;
-    // ------------------------------------------------
+        [Header("Jump Settings")]
+        [SerializeField] private float jumpPower = 5f;
+        [SerializeField] private float fallSpeedModifier = 1f;
+        [SerializeField] private float jumpSpeedModifier = 1f;
+        [SerializeField] private float groundCheckDistance = 1.1f;
+        [SerializeField] private LayerMask groundLayer;
 
-    /* ---------------- Internes Movement ---------------- */
-    private void HandleHorizontal()
-    {
-        // Kamera‑Basics (y‑Komponente raus)
-        Vector3 camF = cameraTransform.forward; camF.y = 0; camF.Normalize();
-        Vector3 camR = cameraTransform.right; camR.y = 0; camR.Normalize();
+        [Header("Camera Settings")]
+        [Tooltip("Transform des Spielers für Rotation")]
+        [SerializeField] private Transform playerModel;
+        [Tooltip("Kamera-Transform für Blick- und Bewegungsrichtung")]
+        [SerializeField] private Transform cameraTransform;
 
-        // 2D‑Input in 3D‑Weltbewegung umrechnen
-        Vector3 desired = camF * moveInput.y + camR * moveInput.x;
-        Vector3 targetVel = desired * movementSpeed;
+        [Header("Interactable Settings")]
+        [SerializeField] TargetProvider TargetProvider;
 
-        // Auf maxSpeed clampen
-        Vector3 hor = new Vector3(targetVel.x, 0f, targetVel.z);
-        if (hor.magnitude > maxSpeed)
-            hor = hor.normalized * maxSpeed;
+        private Rigidbody _rb;
+        private Transform _transform;
 
-        // Alte y‑Komponente holen und neue linearVelocity setzen
-        float currentY = rb.linearVelocity.y;
-        rb.linearVelocity = new Vector3(hor.x, currentY, hor.z);
-    }
+        private Vector2 _moveInput;
+        private bool _jumpRequested;
+        private float _currentSpeed;
 
-
-    private void HandleJump()
-    {
-        if (jumpRequested && IsGrounded())
+        private void Awake()
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x,
-                                      jumpPower * jumpSpeedModifier,
-                                      rb.linearVelocity.z);
+            _rb = GetComponent<Rigidbody>();
+            _transform = transform;
+            _currentSpeed = baseSpeed;
         }
-        jumpRequested = false;
-    }
 
-    private void HandleGravityModifiers()
-    {
-        // schneller runterfallen
-        if (rb.linearVelocity.y < 0f)
+        private void FixedUpdate()
         {
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * (fallSpeedModifier - 1f) * Time.fixedDeltaTime;
+            HandleHorizontalMovement();
+            HandleJump();
+            UpdateVerticalMovement();
         }
-        // Sprung früh abbrechen (Taste losgelassen & JumpSpeedModifier < 1)
-        else if (rb.linearVelocity.y > 0f && !jumpRequested)
+
+        public void UpdateHorizontalMovement(Vector2 input)
         {
-            rb.linearVelocity += Vector3.up * Physics.gravity.y * (jumpSpeedModifier - 1f) * Time.fixedDeltaTime;
+            _moveInput = input;
+        }
+
+        public void RequestJump()
+        {
+            _jumpRequested = true;
+        }
+
+        public void StartSprint()
+        {
+            _currentSpeed = baseSpeed * sprintMultiplier;
+        }
+
+        public void StopSprint()
+        {
+            _currentSpeed = baseSpeed;
+        }
+
+        private void HandleHorizontalMovement()
+        {
+            if (_moveInput.sqrMagnitude < 0.01f)
+                return;
+
+            // Align the player's transform with the camera's yaw angle
+            float yaw = cameraTransform.eulerAngles.y;
+            _transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+
+            // Determine local forward and right directions based on the player's transform
+            Vector3 forward = _transform.forward;
+            Vector3 right = _transform.right;
+
+            // Calculate movement direction relative to the player's orientation
+            Vector3 direction = (forward * _moveInput.y + right * _moveInput.x).normalized;
+            Vector3 targetVelocity = direction * _currentSpeed;
+
+            // Compute the change in velocity needed and apply it to the Rigidbody
+            Vector3 currentVelocity = _rb.linearVelocity;
+            Vector3 delta = new Vector3(targetVelocity.x - currentVelocity.x, 0f, targetVelocity.z - currentVelocity.z);
+            delta = Vector3.ClampMagnitude(delta, maxSpeed);
+            _rb.AddForce(delta, ForceMode.VelocityChange);
+        }
+
+
+        private void HandleJump()
+        {
+            if (_jumpRequested && IsGrounded())
+            {
+                Vector3 currentVelocity = _rb.linearVelocity;
+                currentVelocity.y = jumpPower;
+                _rb.linearVelocity = currentVelocity;
+            }
+            _jumpRequested = false;
+        }
+
+        private void UpdateVerticalMovement()
+        {
+            Vector3 currentVelocity = _rb.linearVelocity;
+            if (currentVelocity.y < 0f)
+                currentVelocity += Vector3.up * Physics.gravity.y * (fallSpeedModifier - 1f) * Time.fixedDeltaTime;
+            else if (currentVelocity.y > 0f && !_jumpRequested)
+                currentVelocity += Vector3.up * Physics.gravity.y * (jumpSpeedModifier - 1f) * Time.fixedDeltaTime;
+            _rb.linearVelocity = currentVelocity;
+        }
+
+        private bool IsGrounded()
+        {
+            return Physics.Raycast(_transform.position, Vector3.down, groundCheckDistance, groundLayer);
         }
     }
-    
-
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, groundCheckDist, groundLayer);
-    }
-
-    public void StartSprint() => movementSpeed *= sprintMultiplier;
-    public void StopSprint() => movementSpeed /= sprintMultiplier;
 }

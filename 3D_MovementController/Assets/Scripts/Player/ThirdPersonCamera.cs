@@ -1,32 +1,36 @@
 using UnityEngine;
 
-public class ThirdPersonCamera : MonoBehaviour
+namespace DefaultNamespace.CameraSystem
 {
-    [Header("References")]
-    [SerializeField] private Transform orientation;
-    [SerializeField] private Transform player;
-    [SerializeField] private Rigidbody rb;
-
-    [SerializeField] private float rotationSpeed = 5f;
-
-    private void Start()
+    public class ThirdPersonCamera : MonoBehaviour
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        [Header("References")]
+        [SerializeField] private Transform player;
+        [SerializeField] private Vector3 offset = new Vector3(0f, 3f, -6f);
+        [SerializeField] private float rotationSpeed = 5f;
+        [SerializeField] private float followSpeed = 10f;
 
-    private void Update()
-    {
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
+        private float yaw;
+        private float pitch;
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        if(inputDir != Vector3.zero)
+        private void Start()
         {
-            Quaternion targetRotation = Quaternion.LookRotation(inputDir.normalized, Vector3.up);
-            player.rotation = Quaternion.Slerp(player.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        private void LateUpdate()
+        {
+            // Camera-Rotation with mouse
+            yaw += Input.GetAxis("Mouse X") * rotationSpeed;
+            pitch -= Input.GetAxis("Mouse Y") * rotationSpeed;
+            pitch = Mathf.Clamp(pitch, -35f, 60f); // FOV stop at 60 degrees
+
+            Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+            Vector3 targetPosition = player.position + rotation * offset;
+
+            transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+            transform.LookAt(player.position + Vector3.up * 1.5f); // look at player with a slight upward offset
         }
     }
 }
