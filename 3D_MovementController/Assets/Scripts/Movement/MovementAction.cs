@@ -1,17 +1,20 @@
 using System;
 using UnityEngine;
 using DefaultNamespace.TargetSystem;
+using UnityEngine.EventSystems;
 
 namespace DefaultNamespace.PlayerSystem
 {
 
     [RequireComponent(typeof(Rigidbody))]
-    public class Movement_Action : MonoBehaviour
+    public class MovementAction : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField] private float baseSpeed = 3f;
         [SerializeField] private float maxSpeed = 10f;
         [SerializeField] private float sprintMultiplier = 2f;
+        [SerializeField] private float acceleration = 20f;
+        [SerializeField] private float deceleration = 25f; 
 
         [Header("Jump Settings")]
         [SerializeField] private float jumpPower = 5f;
@@ -25,6 +28,8 @@ namespace DefaultNamespace.PlayerSystem
         [SerializeField] private Transform playerModel;
         [Tooltip("Kamera-Transform für Blick- und Bewegungsrichtung")]
         [SerializeField] private Transform cameraTransform;
+        [SerializeField] private float rotationSpeed = 10f;  // Wie schnell sich dein Charakter zur Laufrichtung dreht
+
 
         [Header("Interactable Settings")]
         [SerializeField] TargetProvider TargetProvider;
@@ -32,7 +37,8 @@ namespace DefaultNamespace.PlayerSystem
         private Rigidbody _rb;
         private Transform _transform;
 
-        private Vector2 _moveInput;
+        private Vector3 moveDirection = Vector3.zero; // Direction in which the player is moving
+        private Vector3 _moveInput;
         private bool _jumpRequested;
         private float _currentSpeed;
 
@@ -50,7 +56,7 @@ namespace DefaultNamespace.PlayerSystem
             UpdateVerticalMovement();
         }
 
-        public void UpdateHorizontalMovement(Vector2 input)
+        public void UpdateHorizontalMovement(Vector3 input)
         {
             _moveInput = input;
         }
@@ -70,29 +76,49 @@ namespace DefaultNamespace.PlayerSystem
             _currentSpeed = baseSpeed;
         }
 
+        public void Move(Vector3 direction)
+        {
+            moveDirection = direction;
+        }
+
         private void HandleHorizontalMovement()
         {
-            if (_moveInput.sqrMagnitude < 0.01f)
+            // 1) Roh‑Input
+            Vector3 rawInput = new Vector3(_moveInput.x, 0f, _moveInput.z);
+            if (rawInput.sqrMagnitude < 0.01f)
                 return;
 
-            // Align the player's transform with the camera's yaw angle
-            float yaw = cameraTransform.eulerAngles.y;
-            _transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+            // 2) Mapping in lokalen Raum des Charakters
+            Vector3 moveDir = transform.forward * rawInput.z + transform.right * rawInput.x;
+            moveDir.y = 0f;
+            moveDir.Normalize();
 
-            // Determine local forward and right directions based on the player's transform
-            Vector3 forward = _transform.forward;
-            Vector3 right = _transform.right;
+            // 3) Charakter-Model dreht sich in Bewegungsrichtung
+            Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
+            playerModel.rotation = Quaternion.Slerp(
+                playerModel.rotation,
+                targetRot,
+                rotationSpeed * Time.fixedDeltaTime
+            );
 
-            // Calculate movement direction relative to the player's orientation
-            Vector3 direction = (forward * _moveInput.y + right * _moveInput.x).normalized;
-            Vector3 targetVelocity = direction * _currentSpeed;
+            // 4) Gewünschte Geschwindigkeit
+            Vector3 desiredVelocity = moveDir * _currentSpeed;
 
-            // Compute the change in velocity needed and apply it to the Rigidbody
-            Vector3 currentVelocity = _rb.linearVelocity;
-            Vector3 delta = new Vector3(targetVelocity.x - currentVelocity.x, 0f, targetVelocity.z - currentVelocity.z);
-            delta = Vector3.ClampMagnitude(delta, maxSpeed);
+            // 5) Beschleunigung/Verzögerung (deine Logik)
+            Vector3 currentVel = _rb.linearVelocity;
+            currentVel.y = 0f;
+            bool accelerating = Vector3.Dot(desiredVelocity, currentVel) > 0f;
+            float rate = accelerating ? acceleration : deceleration;
+            float maxDelta = rate * Time.fixedDeltaTime;
+
+            Vector3 newVel = Vector3.MoveTowards(currentVel, desiredVelocity, maxDelta);
+            if (newVel.magnitude > maxSpeed)
+                newVel = newVel.normalized * maxSpeed;
+
+            Vector3 delta = newVel - currentVel;
             _rb.AddForce(delta, ForceMode.VelocityChange);
         }
+
 
 
         private void HandleJump()

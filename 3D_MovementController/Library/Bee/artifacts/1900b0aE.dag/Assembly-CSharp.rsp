@@ -432,10 +432,10 @@
 "Assets/Scripts/Interaction/RacastHitProvider.cs"
 "Assets/Scripts/Interaction/RaycastTargetProvider.cs"
 "Assets/Scripts/Interaction/SwitchInteractable.cs"
-"Assets/Scripts/Movement/Movement_Action.cs"
+"Assets/Scripts/Movement/MovementAction.cs"
 "Assets/Scripts/Movement/TargetProvider.cs"
 "Assets/Scripts/Player/CameraOrientation.cs"
-"Assets/Scripts/Player/Player_Behaviour.cs"
+"Assets/Scripts/Player/PlayerController.cs"
 "Assets/Scripts/Player/ThirdPersonCamera.cs"
 -langversion:9.0
 /deterministic

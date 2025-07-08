@@ -1059,7 +1059,7 @@ Transform:
   m_GameObject: {fileID: 738620769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.201, y: 0.574, z: 0}
+  m_LocalPosition: {x: 0.242, y: 0.744, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1202,8 +1202,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910098629}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.022709697, y: -0.000000012382472, z: 2.812747e-10, w: 0.99974215}
-  m_LocalPosition: {x: 0, y: 1.783, z: -8.203}
+  m_LocalRotation: {x: 0.08372309, y: 3.5145144e-15, z: -6.9682304e-16, w: 0.9964891}
+  m_LocalPosition: {x: 0.242, y: 1.9139999, z: -7.5099998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1307,11 +1307,11 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 662239510}
+    TrackingTarget: {fileID: 738620770}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 44.9
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -1346,13 +1346,13 @@ MonoBehaviour:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
       Enabled: 1
-      Size: {x: 0.04, y: 0.04}
+      Size: {x: 0.08, y: 0.2}
     HardLimits:
       Enabled: 0
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0, y: -0.27, z: 0}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
     Enabled: 0
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0, y: 0.26, z: 0}
   TrackerSettings:
     BindingMode: 3
     PositionDamping: {x: 1, y: 1, z: 1}
@@ -1382,15 +1382,15 @@ MonoBehaviour:
   Radius: 10
   Orbits:
     Top:
-      Radius: 2
-      Height: 1.23
+      Radius: 1.7
+      Height: 0.9
     Center:
-      Radius: 3.3
-      Height: 0.15
+      Radius: 2.6
+      Height: -0.09
     Bottom:
-      Radius: 2.5
-      Height: -0.73
-    SplineCurvature: 0.367
+      Radius: 1.7
+      Height: -1.25
+    SplineCurvature: 0.478
   RecenteringTarget: 2
   HorizontalAxis:
     Value: 0
@@ -1434,7 +1434,6 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1483,7 +1482,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60.000004
+  field of view: 44.9
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -1509,8 +1508,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.022709697, y: -0.000000012382473, z: 2.8127475e-10, w: 0.9997421}
-  m_LocalPosition: {x: 0, y: 1.783, z: -8.203}
+  m_LocalRotation: {x: 0.0837231, y: 3.480538e-15, z: -2.9242815e-16, w: 0.9964891}
+  m_LocalPosition: {x: 0.242, y: 1.9139999, z: -7.5099998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1548,20 +1547,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0254b93a20fc64244a2bf84b0a51a237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 662239510}
-  rotationSpeed: 5
 --- !u!1 &1068344981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,10 +1736,10 @@ MonoBehaviour:
     m_ActionId: 28a6202a-076e-4a53-b4a0-137a3a8da71f
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 0}
 --- !u!114 &1068344988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1782,6 +1767,8 @@ MonoBehaviour:
   baseSpeed: 5
   maxSpeed: 12
   sprintMultiplier: 2
+  acceleration: 20
+  deceleration: 25
   jumpPower: 5
   fallSpeedModifier: 1
   jumpSpeedModifier: 1
@@ -1791,6 +1778,7 @@ MonoBehaviour:
     m_Bits: 64
   playerModel: {fileID: 1068344982}
   cameraTransform: {fileID: 910098630}
+  rotationSpeed: 5
   TargetProvider: {fileID: 1068344991}
 --- !u!136 &1068344990
 CapsuleCollider:

@@ -6,22 +6,27 @@ using DefaultNamespace.TargetSystem;
 namespace DefaultNamespace.PlayerSystem
 {
 
-    [RequireComponent(typeof(Movement_Action))]
-    public class Player_Behaviour : MonoBehaviour
+    [RequireComponent(typeof(MovementAction))]
+    public class PlayerController : MonoBehaviour
     {
-        private Movement_Action movement;
+        private MovementAction movement;
         private TargetProvider targetProvider; // Add a reference to TargetProvider
 
         private void Awake()
         {
-            movement = GetComponent<Movement_Action>();
+            movement = GetComponent<MovementAction>();
             targetProvider = GetComponent<TargetProvider>(); // Initialize TargetProvider
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
-        private void OnMove(InputAction.CallbackContext moveInputAction)
+
+        private void OnMove(InputAction.CallbackContext ctx)
         {
-            Vector2 input = moveInputAction.ReadValue<Vector2>();
-            movement.UpdateHorizontalMovement(input);
+            Vector2 input2D = ctx.ReadValue<Vector2>();
+            Vector3 input3D = new Vector3(input2D.x, 0f, input2D.y);
+            movement.UpdateHorizontalMovement(input3D);
+            movement.UpdateHorizontalMovement(input3D);
         }
 
         private void OnJump(InputAction.CallbackContext ctx)

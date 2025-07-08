@@ -22,7 +22,7 @@ MonoBehaviour:
   m_Values:
   - '{"m_FixedPaneDimension":200.0}'
   - '{"m_FixedPaneDimension":320.0}'
-  - '{"m_ShowAlternatingRowBackgrounds":0,"serializedVirtualizationData":{"scrollOffset":{"x":0.0,"y":0.0},"firstVisibleIndex":0,"contentPadding":0.0,"contentHeight":0.0,"anchoredItemIndex":0,"anchorOffset":0.0},"m_SelectedIds":[695369222],"m_ExpandedItemIds":[-33425132,121703114,1828176908,-2051250582,695369222]}'
+  - '{"m_ShowAlternatingRowBackgrounds":0,"serializedVirtualizationData":{"scrollOffset":{"x":0.0,"y":0.0},"firstVisibleIndex":0,"contentPadding":0.0,"contentHeight":0.0,"anchoredItemIndex":0,"anchorOffset":0.0},"m_SelectedIds":[1173379578],"m_ExpandedItemIds":[-33425132,121703114,1828176908,-2051250582,695369222]}'
   - '{"m_Value":0.0,"m_LowValue":0.0,"m_HighValue":0.0}'
-  - '{"m_ShowAlternatingRowBackgrounds":0,"serializedVirtualizationData":{"scrollOffset":{"x":0.0,"y":0.0},"firstVisibleIndex":0,"contentPadding":0.0,"contentHeight":0.0,"anchoredItemIndex":0,"anchorOffset":0.0},"m_SelectedIds":[],"m_ExpandedItemIds":[]}'
-  - '{"m_Value":0.0,"m_LowValue":0.0,"m_HighValue":0.0}'
+  - '{}'
+  - '{}'
