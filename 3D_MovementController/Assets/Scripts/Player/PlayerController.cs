@@ -11,6 +11,8 @@ namespace DefaultNamespace.PlayerSystem
     {
         private MovementAction movement;
         private TargetProvider targetProvider; // Add a reference to TargetProvider
+        private MovementAction movementAction;
+
 
         private void Awake()
         {
@@ -19,7 +21,6 @@ namespace DefaultNamespace.PlayerSystem
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
 
         private void OnMove(InputAction.CallbackContext ctx)
         {
